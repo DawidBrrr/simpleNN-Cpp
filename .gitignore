@@ -1,19 +1,37 @@
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-CMakeUserPresets.json
+# Ignore build directory
+/build/
 
-# CLion
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#cmake-build-*
+# Ignore CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Ignore Visual Studio / VSCode files (if used)
+.vscode/
+*.sln
+*.vcxproj*
+*.user
+*.opensdf
+*.sdf
+*.ipch/
+
+# Ignore system files (macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# Ignore temporary and backup files from editors
+*~
+*.swp
+*.bak
+*.tmp
+
+# Ignore log and output files
+*.log
+*.out
+*.o
+*.obj
+
+# Ignore executable file
+simpleNN
