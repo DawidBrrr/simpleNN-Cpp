@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
 class Neuron {
 private:
@@ -15,6 +16,7 @@ public:
     Neuron(Neuron &&other) noexcept;
     Neuron& operator=(const Neuron &other);
     Neuron& operator=(Neuron &&other) noexcept;
+    ~Neuron() = default;
 
     int getValue() const;
     void setValue(int v);
@@ -22,6 +24,8 @@ public:
     void setBias(double b);
 
     void reset();
+
+    double activate(const std::function<double(double)> &activationFunction) const;
 
 
 

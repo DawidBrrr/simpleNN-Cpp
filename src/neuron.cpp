@@ -10,10 +10,10 @@ Neuron::Neuron(double bias) : value(0), bias(bias) {}
 Neuron::Neuron(const Neuron &other) : value(other.value), bias(other.bias) {}
 
 // Move constructor
-Neuron::Neuron(Neuron &&other) noexcept : value(other.value), bias(other.bias) {
-    other.value = 0;
-    other.bias = 0.0;
-}
+Neuron::Neuron(Neuron &&other) noexcept 
+    : value(std::exchange(other.value, 0)),  // Transfers value and sets other.value = 0
+      bias(std::exchange(other.bias, 0.0))   // Transfers bias and sets other.bias = 0.0
+{}
 
 // Copy assignment operator
 Neuron& Neuron::operator=(const Neuron &other) {
@@ -57,3 +57,6 @@ void Neuron::reset() {
     bias = 0.0;
 }
 
+double Neuron::activate(const std::function<double(double)> &activationFunction) const {
+    return activationFunction(static_cast<double>(value) + bias);
+}
