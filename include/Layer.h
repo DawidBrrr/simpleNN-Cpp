@@ -20,6 +20,7 @@ public:
     Layer& operator=(Layer &&other) noexcept;
     ~Layer() = default;    
 
+    //Setter Getters
     std::vector<Neuron>& getNeurons();
     const std::vector<Neuron>& getNeurons() const;
 
@@ -29,10 +30,15 @@ public:
     std::vector<double> getBiases() const;
     void setBiases(const std::vector<double>& newBiases);
 
+    //Reset
+    void reset();
 
-
+    //FeedForward function
     std::vector<double> feedForward(const std::vector<double> &inputs, const std::function<double(double)> &activationFunction) const;
 
+    //Random Initializations
+    void initializeWeights(std::function<double()> generator);
+    void initializeBiases(std::function<double()> generator);
 
 
 };

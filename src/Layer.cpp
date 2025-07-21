@@ -98,6 +98,15 @@ void Layer::setBiases(const std::vector<double> &newBiases)
         neurons[i].setBias(newBiases[i]);
     }
 }
+
+void Layer::reset(){
+    for(auto& neuron : neurons){
+        neuron.reset();
+    }
+    for(auto& weightRow : weights){
+        std::fill(weightRow.begin(),weightRow.end(),0.0);
+    }
+}
 /**
  * Performs forward propagation through the layer.
  * 
@@ -130,4 +139,17 @@ std::vector<double> Layer::feedForward(const std::vector<double> &inputs, const 
 
     return outputs;
 
+}
+
+void Layer::initializeWeights(std::function<double()> generator)
+{
+    for (auto& row : weights)
+        for (auto& w : row)
+            w = generator();
+}
+
+void Layer::initializeBiases(std::function<double()> generator)
+{
+    for (auto& neuron : neurons)
+        neuron.setBias(generator());
 }
