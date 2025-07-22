@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <functional>
 #include <stdexcept>
 #include <numeric>
@@ -24,6 +25,7 @@ public:
     std::vector<Neuron>& getNeurons();
     const std::vector<Neuron>& getNeurons() const;
 
+    std::vector<std::vector<double>>& getWeights();
     const std::vector<std::vector<double>>& getWeights() const;
     void setWeights(const std::vector<std::vector<double>>& newWeights);
     

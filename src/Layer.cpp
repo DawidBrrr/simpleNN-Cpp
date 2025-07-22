@@ -40,6 +40,11 @@ const std::vector<Neuron>& Layer::getNeurons() const {
     return neurons;
 }
 
+std::vector<std::vector<double>> &Layer::getWeights()
+{
+    return weights;
+}
+
 const std::vector<std::vector<double>> &Layer::getWeights() const
 {
     return weights;

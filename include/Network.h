@@ -1,4 +1,9 @@
+#pragma once
+
 #include "Layer.h"
+#include <random>
+#include <vector>
+#include <functional>
 
 class Network{
 private:
