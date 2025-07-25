@@ -16,7 +16,7 @@ int main(){
 
     Network net({2, 3, 1}); // 2 wejścia, 1 warstwa ukryta z 3 neuronami, 1 wyjście
     net.initializeWeights();
-    net.initializeBiases();
+    net.initializeBiases(); 
 
     Trainer trainer(net);
     trainer.train(inputs, targets, 10000,0.5,ActivationFunctions::sigmoid,ActivationFunctions::sigmoidDerivative,1000);
