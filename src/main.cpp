@@ -1,30 +1,64 @@
-#include <iostream>
 #include "Network.h"
 #include "Trainer.h"
 #include "utils.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+std::vector<std::vector<double>> iris_inputs;
+std::vector<std::vector<double>> iris_targets;
+
+void loadIrisDataset() {
+    std::ifstream file("../data/iris.csv");
+    std::string line;
+
+    //Skip first line 
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string val;
+
+        std::vector<double> input(4);
+        for (int i = 0; i < 4; ++i) {
+            std::getline(ss, val, ',');
+            input[i] = std::stod(val);
+        }
+
+        std::string label;
+        std::getline(ss, label, ',');
+        label.erase(std::remove(label.begin(), label.end(), '\"'), label.end());
+        std::vector<double> target(3, 0.0);
+        if (label == "Setosa") target[0] = 1.0;
+        else if (label == "Versicolor") target[1] = 1.0;
+        else if (label == "Virginica") target[2] = 1.0;
+
+        iris_inputs.push_back(input);
+        iris_targets.push_back(target);
+    }
+}
+
 
 int main(){
     
-    //Problem XOR
+    //Problem Iris Classification
+    loadIrisDataset();
 
-    std::vector<std::vector<double>> inputs = {
-    {0, 0}, {0, 1}, {1, 0}, {1, 1}
-    };
-    std::vector<std::vector<double>> targets = {
-    {0}, {1}, {1}, {0}
-    };
-
-    Network net({2, 3, 1}); // 2 wejścia, 1 warstwa ukryta z 3 neuronami, 1 wyjście
+    Network net({4, 8, 3});
     net.initializeWeights();
-    net.initializeBiases(); 
-
+    net.initializeBiases();
     Trainer trainer(net);
-    trainer.train(inputs, targets, 10000,0.5,ActivationFunctions::sigmoid,ActivationFunctions::sigmoidDerivative,1000);
 
-    std::cout << "\n=== Final Evaluation ===\n";
-    trainer.evaluate(inputs, targets, ActivationFunctions::sigmoid);
-    
+    trainer.train(iris_inputs, iris_targets, 2000, 0.1,
+                  ActivationFunctions::sigmoid,
+                  ActivationFunctions::sigmoidDerivative,
+                  500);
 
+    double accuracy = trainer.calculateClassificationAccuracy(iris_inputs, iris_targets, ActivationFunctions::sigmoid);
+    std::cout << "Iris classification accuracy: " << accuracy << "\n";
 
 
     return 0;

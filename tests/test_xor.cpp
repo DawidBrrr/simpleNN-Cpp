@@ -24,17 +24,11 @@ TEST(XORNetworkTest, LearnsXOR) {
                   1000);
 
     // Ewaluacja końcowa
-    int correct = 0;
-    for (size_t i = 0; i < inputs.size(); ++i) {
-        auto output = net.feedForward(inputs[i], ActivationFunctions::sigmoid);
-        int predicted = output[0] >= 0.5 ? 1 : 0;
-        int actual = static_cast<int>(targets[i][0]);
-        if (predicted == actual) correct++;
-    }
+    trainer.evaluate(inputs, targets, ActivationFunctions::sigmoid);
 
-    double accuracy = static_cast<double>(correct) / inputs.size();
-    std::cout << "XOR accuracy: " << accuracy << "\n";
+    double accuracy = trainer.calculateRegressionAccuracy(
+        inputs, targets, ActivationFunctions::sigmoid, 0.15);
 
-    // Spodziewamy się 100% poprawnych odpowiedzi
-    ASSERT_EQ(correct, 4);
+    std::cout << "Dokładność XOR (tolerancja 0.15): " << accuracy << "\n";
+    EXPECT_GT(accuracy, 0.95);
 }

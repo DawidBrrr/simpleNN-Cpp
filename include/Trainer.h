@@ -24,5 +24,16 @@ public:
                   const std::vector<std::vector<double>>& targets,
                   const std::function<double(double)>& activation) const;
 
+    double Trainer::calculateRegressionAccuracy(
+                                                const std::vector<std::vector<double>>& inputs,
+                                                const std::vector<std::vector<double>>& targets,
+                                                const std::function<double(double)>& activation,
+                                                double tolerance) const;
+
+    double Trainer::calculateClassificationAccuracy(
+                                                    const std::vector<std::vector<double>>& inputs,
+                                                    const std::vector<std::vector<double>>& targets,
+                                                    const std::function<double(double)>& activation) const;                                       
+
 
 };

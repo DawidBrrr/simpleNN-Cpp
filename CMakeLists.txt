@@ -18,6 +18,10 @@ add_library(simpleNN
 
 target_include_directories(simpleNN PUBLIC include)
 
+# Główna aplikacja (plik wykonywalny)
+add_executable(simpleNNN src/main.cpp)
+target_link_libraries(simpleNNN simpleNN)
+
 # GTest
 include(FetchContent)
 FetchContent_Declare(

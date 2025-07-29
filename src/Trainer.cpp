@@ -38,3 +38,30 @@ void Trainer::evaluate(const std::vector<std::vector<double>> &inputs,
     }
 
 }
+
+double Trainer::calculateRegressionAccuracy(const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &targets, const std::function<double(double)> &activation, double tolerance) const
+{
+    size_t correct = 0;
+    for (size_t i = 0; i < inputs.size(); ++i) {
+        auto output = net.feedForward(inputs[i], activation);
+        if (std::abs(output[0] - targets[i][0]) < tolerance) {
+            ++correct;
+        }
+    }
+    return static_cast<double>(correct) / inputs.size();
+}
+
+double Trainer::calculateClassificationAccuracy(const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &targets, const std::function<double(double)> &activation) const
+{
+    size_t correct = 0;
+    for (size_t i = 0; i < inputs.size(); ++i) {
+        auto output = net.feedForward(inputs[i], activation);
+
+        int predicted = std::distance(output.begin(), std::max_element(output.begin(), output.end()));
+        int actual = std::distance(targets[i].begin(), std::max_element(targets[i].begin(), targets[i].end()));
+
+        if (predicted == actual)
+            ++correct;
+    }
+    return static_cast<double>(correct) / inputs.size();
+}
