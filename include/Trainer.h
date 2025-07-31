@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Network.h"
+#include "utils.h"
 #include <vector>
 #include <functional>
 #include <iostream>
@@ -33,7 +34,14 @@ public:
     double Trainer::calculateClassificationAccuracy(
                                                     const std::vector<std::vector<double>>& inputs,
                                                     const std::vector<std::vector<double>>& targets,
-                                                    const std::function<double(double)>& activation) const;                                       
+                                                    const std::function<double(double)>& activation) const;     
 
+    std::vector<double> predictProbabilities(Network& net,
+                                                const std::vector<double>& rawInput,
+                                                const std::vector<double>& minVals,
+                                                const std::vector<double>& maxVals);
+    
+    void printClassProbabilities(const std::vector<double>& probabilities,
+                                const std::vector<std::string>& classLabels);                                                
 
 };

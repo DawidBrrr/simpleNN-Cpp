@@ -65,3 +65,22 @@ double Trainer::calculateClassificationAccuracy(const std::vector<std::vector<do
     }
     return static_cast<double>(correct) / inputs.size();
 }
+
+std::vector<double> Trainer::predictProbabilities(Network &net, const std::vector<double> &rawInput, const std::vector<double> &minVals, const std::vector<double> &maxVals)
+{
+    auto normalized = utils::normalize(rawInput, minVals, maxVals);
+    auto output = net.feedForward(normalized, ActivationFunctions::sigmoid);
+    auto probabilities = utils::softmax(output);
+    return probabilities;
+}
+
+void Trainer::printClassProbabilities(const std::vector<double> &probabilities, const std::vector<std::string> &classLabels)
+{
+    std::cout << "Class probabilities:\n";
+    for (size_t i = 0; i < probabilities.size(); ++i) {
+        std::cout << "- " << classLabels[i] << ": "
+                  << std::fixed << std::setprecision(2)
+                  << probabilities[i] * 100 << "%\n";
+    }
+}
+

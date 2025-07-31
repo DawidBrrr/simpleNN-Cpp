@@ -60,6 +60,14 @@ int main(){
     double accuracy = trainer.calculateClassificationAccuracy(iris_inputs, iris_targets, ActivationFunctions::sigmoid);
     std::cout << "Iris classification accuracy: " << accuracy << "\n";
 
+    //Sample test
+    std::vector<double> sample = {5.4,3.9,1.7,0.4};
+    std::vector<std::string> classLabels = {"Setosa", "Versicolor", "Virginica"};
+
+    auto [minVals, maxVals] = utils::calculateMinMax(iris_inputs);
+    auto probs = trainer.predictProbabilities(net, sample, minVals, maxVals);
+    trainer.printClassProbabilities(probs, classLabels);
+
 
     return 0;
 }
