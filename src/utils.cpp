@@ -77,3 +77,42 @@ std::pair<std::vector<double>, std::vector<double>> utils::calculateMinMax(const
 
     return {minValues, maxValues};
 }
+
+double LossFunctions::mse(const std::vector<double> &predicted, const std::vector<double> &target)
+{
+    if(predicted.size() != target.size()) {
+        throw std::invalid_argument("Size mismatch in MSE Loss");
+    }
+    double sum = 0.0;
+    for(size_t i = 0; i < predicted.size(); ++i){
+        double diff = predicted[i] - target[i];
+        sum += diff * diff;
+    }
+    return sum / predicted.size();
+}
+
+double LossFunctions::crossEntropy(const std::vector<double> &predicted, const std::vector<double> &target)
+{
+    if(predicted.size() != target.size()) {
+        throw std::invalid_argument("Size mismatch in Cross Entropy Loss");
+    }
+
+    double epsilon = 1e-12; // To avoid log(0)
+    double sum = 0.0;
+    for(size_t i = 0; i < predicted.size(); ++i){
+        double p = std::max(std::min(predicted[i], 1.0 - epsilon),epsilon);
+        sum += target[i] * std::log(p);
+    }
+
+    return -sum;
+}
+
+double LossFunctions::mseDerivative(double predicted, double target)
+{
+    return predicted - target;
+}
+
+double LossFunctions::crossEntropyDerivative(double predicted, double target)
+{
+    return -(target / (predicted + 1e-9)); // Adding a small value to avoid division by zero
+}

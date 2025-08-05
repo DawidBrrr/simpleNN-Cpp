@@ -46,6 +46,10 @@ int main(){
     
     //Problem Iris Classification
     loadIrisDataset();
+    auto [minVals, maxVals] = utils::calculateMinMax(iris_inputs);
+    for (auto& input : iris_inputs) {
+        input = utils::normalize(input, minVals, maxVals);
+    }
 
     Network net({4, 8, 3});
     net.initializeWeights();
@@ -55,6 +59,8 @@ int main(){
     trainer.train(iris_inputs, iris_targets, 2000, 0.1,
                   ActivationFunctions::sigmoid,
                   ActivationFunctions::sigmoidDerivative,
+                  LossFunctions::mseDerivative,
+                  LossFunctions::mse,
                   500);
 
     double accuracy = trainer.calculateClassificationAccuracy(iris_inputs, iris_targets, ActivationFunctions::sigmoid);
@@ -64,7 +70,6 @@ int main(){
     std::vector<double> sample = {5.4,3.9,1.7,0.4};
     std::vector<std::string> classLabels = {"Setosa", "Versicolor", "Virginica"};
 
-    auto [minVals, maxVals] = utils::calculateMinMax(iris_inputs);
     auto probs = trainer.predictProbabilities(net, sample, minVals, maxVals);
     trainer.printClassProbabilities(probs, classLabels);
 

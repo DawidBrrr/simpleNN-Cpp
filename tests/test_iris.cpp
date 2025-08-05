@@ -54,6 +54,8 @@ TEST(IrisNetworkTest, LearnsToClassify) {
     trainer.train(iris_inputs, iris_targets, 2000, 0.1,
                   ActivationFunctions::sigmoid,
                   ActivationFunctions::sigmoidDerivative,
+                  LossFunctions::mseDerivative,
+                  LossFunctions::mse,
                   500);
 
     double accuracy = trainer.calculateClassificationAccuracy(iris_inputs, iris_targets, ActivationFunctions::sigmoid);

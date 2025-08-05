@@ -21,10 +21,12 @@ TEST(XORNetworkTest, LearnsXOR) {
     trainer.train(inputs, targets, 10000, 0.5,
                   ActivationFunctions::sigmoid,
                   ActivationFunctions::sigmoidDerivative,
+                  LossFunctions::mseDerivative,
+                  LossFunctions::mse,
                   1000);
 
     // Ewaluacja końcowa
-    trainer.evaluate(inputs, targets, ActivationFunctions::sigmoid);
+    trainer.evaluate(inputs, targets, ActivationFunctions::sigmoid,LossFunctions::mse,10000);
 
     double accuracy = trainer.calculateRegressionAccuracy(
         inputs, targets, ActivationFunctions::sigmoid, 0.15);

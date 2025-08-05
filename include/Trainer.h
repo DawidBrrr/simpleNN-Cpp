@@ -19,11 +19,15 @@ public:
                double learningRate,
                const std::function<double(double)>& activation,
                const std::function<double(double)>& activationDerivative,
+               const std::function<double(double,double)> &lossDerivative,
+               const std::function<double(const std::vector<double>&, const std::vector<double>&)> &lossFunction,
                size_t printEvery = 1000);
 
     void evaluate(const std::vector<std::vector<double>>& inputs,
                   const std::vector<std::vector<double>>& targets,
-                  const std::function<double(double)>& activation) const;
+                  const std::function<double(double)>& activation,
+                  const std::function<double(const std::vector<double>&, const std::vector<double>&)> &lossFunction,
+                  size_t currentEpoch) const;              
 
     double Trainer::calculateRegressionAccuracy(
                                                 const std::vector<std::vector<double>>& inputs,

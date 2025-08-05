@@ -18,7 +18,8 @@ public:
                    const std::vector<double>& target,
                    const std::function<double(double)>& activationFunction,
                    const std::function<double(double)>& activationDerivative,
-                   double learningRate);
+                   double learningRate,
+                   const std::function<double(double,double)> &lossDerivative);
 
     void initializeWeights();
     void initializeBiases();

@@ -20,7 +20,8 @@ void Network::backpropagate(const std::vector<double> &input,
                             const std::vector<double> &target, 
                             const std::function<double(double)> &activationFunction, 
                             const std::function<double(double)> &activationDerivative, 
-                            double learningRate){
+                            double learningRate,
+                            const std::function<double(double,double)> &lossDerivative) {
 
     std::vector<std::vector<double>> activations;
     std::vector<std::vector<double>> zs;
@@ -55,7 +56,7 @@ void Network::backpropagate(const std::vector<double> &input,
     for (size_t i = 0; i < layers[L].getNeurons().size(); ++i) {
         double z = zs[L][i];
         double a_val = activations[L + 1][i];
-        deltas[L][i] = (a_val - target[i]) * activationDerivative(z);
+        deltas[L][i] = lossDerivative(a_val, target[i]) * activationDerivative(z);
     }
 
     // Hidden layers
