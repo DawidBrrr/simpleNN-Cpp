@@ -1,51 +1,28 @@
 #pragma once
 
 #include "Network.h"
-#include "utils.h"
 #include <vector>
 #include <functional>
-#include <iostream>
-#include <iomanip>
+#include <string>
 
-class Trainer{
-private:
+class Trainer {
+protected:
     Network& net;
+    size_t printEvery;
+
 public:
-    Trainer(Network& network);
+    Trainer(Network& network, size_t printEvery = 1000);
 
-    void train(const std::vector<std::vector<double>>& inputs,
-               const std::vector<std::vector<double>>& targets,
-               size_t epochs,
-               double learningRate,
-               const std::function<double(double)>& activation,
-               const std::function<double(double)>& activationDerivative,
-               const std::function<double(double,double)> &lossDerivative,
-               const std::function<double(const std::vector<double>&, const std::vector<double>&)> &lossFunction,
-               size_t printEvery = 1000);
+    virtual void train(const std::vector<std::vector<double>>& inputs,
+                       const std::vector<std::vector<double>>& targets,
+                       size_t epochs,
+                       double learningRate,
+                       size_t printEvery) = 0;
 
-    void evaluate(const std::vector<std::vector<double>>& inputs,
-                  const std::vector<std::vector<double>>& targets,
-                  const std::function<double(double)>& activation,
-                  const std::function<double(const std::vector<double>&, const std::vector<double>&)> &lossFunction,
-                  size_t currentEpoch) const;              
+    virtual void evaluate(const std::vector<std::vector<double>>& inputs,
+                          const std::vector<std::vector<double>>& targets,
+                          size_t currentEpoch) const = 0;
 
-    double Trainer::calculateRegressionAccuracy(
-                                                const std::vector<std::vector<double>>& inputs,
-                                                const std::vector<std::vector<double>>& targets,
-                                                const std::function<double(double)>& activation,
-                                                double tolerance) const;
-
-    double Trainer::calculateClassificationAccuracy(
-                                                    const std::vector<std::vector<double>>& inputs,
-                                                    const std::vector<std::vector<double>>& targets,
-                                                    const std::function<double(double)>& activation) const;     
-
-    std::vector<double> predictProbabilities(Network& net,
-                                                const std::vector<double>& rawInput,
-                                                const std::vector<double>& minVals,
-                                                const std::vector<double>& maxVals);
-    
-    void printClassProbabilities(const std::vector<double>& probabilities,
-                                const std::vector<std::string>& classLabels);                                                
-
+    virtual double calculateAccuracy(const std::vector<std::vector<double>>& inputs,
+                                     const std::vector<std::vector<double>>& targets) const = 0;
 };

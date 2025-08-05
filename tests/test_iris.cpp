@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "Network.h"
-#include "Trainer.h"
+#include "TrainerClassification.h"
 #include "utils.h"
 #include <fstream>
 #include <sstream>
@@ -49,16 +49,15 @@ TEST(IrisNetworkTest, LearnsToClassify) {
     Network net({4, 8, 3});
     net.initializeWeights();
     net.initializeBiases();
-    Trainer trainer(net);
+    TrainerClassification trainer(net,
+                                  ActivationFunctions::sigmoid,
+                                  ActivationFunctions::sigmoidDerivative,
+                                  LossFunctions::crossEntropyDerivative,
+                                  LossFunctions::crossEntropy);
 
-    trainer.train(iris_inputs, iris_targets, 2000, 0.1,
-                  ActivationFunctions::sigmoid,
-                  ActivationFunctions::sigmoidDerivative,
-                  LossFunctions::mseDerivative,
-                  LossFunctions::mse,
-                  500);
+    trainer.train(iris_inputs, iris_targets, 2000, 0.1,500);
 
-    double accuracy = trainer.calculateClassificationAccuracy(iris_inputs, iris_targets, ActivationFunctions::sigmoid);
+    double accuracy = trainer.calculateAccuracy(iris_inputs, iris_targets);
     std::cout << "Iris classification accuracy: " << accuracy << "\n";
 
     ASSERT_GT(accuracy, 0.85); // minimum 85%

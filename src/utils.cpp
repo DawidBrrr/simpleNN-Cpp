@@ -109,10 +109,10 @@ double LossFunctions::crossEntropy(const std::vector<double> &predicted, const s
 
 double LossFunctions::mseDerivative(double predicted, double target)
 {
-    return predicted - target;
+    return 2.0 * (predicted - target);
 }
 
 double LossFunctions::crossEntropyDerivative(double predicted, double target)
 {
-    return -(target / (predicted + 1e-9)); // Adding a small value to avoid division by zero
+    return predicted-target; // zakłada softmax + CE
 }

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "Network.h"
-#include "Trainer.h"
+#include "TrainerRegression.h"
 #include "utils.h"
 
 TEST(XORNetworkTest, LearnsXOR) {
@@ -17,19 +17,17 @@ TEST(XORNetworkTest, LearnsXOR) {
     net.initializeWeights();
     net.initializeBiases();
 
-    Trainer trainer(net);
-    trainer.train(inputs, targets, 10000, 0.5,
-                  ActivationFunctions::sigmoid,
-                  ActivationFunctions::sigmoidDerivative,
-                  LossFunctions::mseDerivative,
-                  LossFunctions::mse,
-                  1000);
+    TrainerRegression trainer(net,
+                                  ActivationFunctions::sigmoid,
+                                  ActivationFunctions::sigmoidDerivative,
+                                  LossFunctions::mseDerivative,
+                                  LossFunctions::mse,0.15);
+    trainer.train(inputs, targets, 10000, 0.5,1000);
 
     // Ewaluacja końcowa
-    trainer.evaluate(inputs, targets, ActivationFunctions::sigmoid,LossFunctions::mse,10000);
+    trainer.evaluate(inputs, targets,10000);
 
-    double accuracy = trainer.calculateRegressionAccuracy(
-        inputs, targets, ActivationFunctions::sigmoid, 0.15);
+    double accuracy = trainer.calculateAccuracy(inputs, targets);
 
     std::cout << "Dokładność XOR (tolerancja 0.15): " << accuracy << "\n";
     EXPECT_GT(accuracy, 0.95);

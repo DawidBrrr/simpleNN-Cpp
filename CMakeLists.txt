@@ -14,6 +14,8 @@ add_library(simpleNN
     src/Neuron.cpp
     src/utils.cpp
     src/Trainer.cpp
+    src/TrainerClassification.cpp
+    src/TrainerRegression.cpp
 )
 
 target_include_directories(simpleNN PUBLIC include)
