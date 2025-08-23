@@ -37,8 +37,10 @@ void TrainerRegression::evaluate(const std::vector<std::vector<double>>& inputs,
         totalLoss += lossFunction(output, targets[i]);
     }
     double avgLoss = totalLoss / inputs.size();
+    double accuracy = calculateAccuracy(inputs, targets);
     std::cout << "Epoch " << currentEpoch << " - Avg Loss: "
-              << std::fixed << std::setprecision(6) << avgLoss << "\n";
+              << std::fixed << std::setprecision(6) << avgLoss << " - Accuracy: " 
+              << std::fixed << std::setprecision(2) << accuracy << "\n";
 }
 
 double TrainerRegression::calculateAccuracy(const std::vector<std::vector<double>>& inputs,

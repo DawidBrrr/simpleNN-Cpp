@@ -114,5 +114,5 @@ double LossFunctions::mseDerivative(double predicted, double target)
 
 double LossFunctions::crossEntropyDerivative(double predicted, double target)
 {
-    return predicted-target; // zakłada softmax + CE
+    return predicted-target; // zakłada softmax + Cross Entropy
 }

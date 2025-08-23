@@ -102,6 +102,16 @@ void Network::initializeWeights(){
 
 }
 
+void Network::HeInitializeWeights(){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    for (auto& layer : layers) {
+        double stddev = std::sqrt(2.0 / layer.getNeurons().size());
+        std::normal_distribution<double> dist(0.0, stddev);
+        layer.initializeWeights([&]() { return dist(gen); });
+    }
+}
+
 void Network::initializeBiases(){
     std::random_device rd;
     std::mt19937 gen(rd());

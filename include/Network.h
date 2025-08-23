@@ -22,5 +22,6 @@ public:
                    const std::function<double(double,double)> &lossDerivative);
 
     void initializeWeights();
+    void HeInitializeWeights();
     void initializeBiases();
 };

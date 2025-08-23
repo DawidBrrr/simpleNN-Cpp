@@ -1,5 +1,13 @@
 #include "TrainerClassification.h"
 
+/*
+Trainer for classification tasks
+@network: The neural network to train
+@activation: The activation function to use
+@activationDerivative: The derivative of the activation function
+@lossDerivative: The derivative of the loss function
+@lossFunction: The loss function to use
+*/ 
 TrainerClassification::TrainerClassification(Network& network,
                                              std::function<double(double)> activation,
                                              std::function<double(double)> activationDerivative,
@@ -36,8 +44,10 @@ void TrainerClassification::evaluate(const std::vector<std::vector<double>>& inp
         totalLoss += lossFunction(utils::softmax(output), targets[i]);
     }
     double avgLoss = totalLoss / inputs.size();
+    double accuracy = calculateAccuracy(inputs, targets);
     std::cout << "Epoch " << currentEpoch << " - Avg Loss: "
-              << std::fixed << std::setprecision(6) << avgLoss << "\n";
+              << std::fixed << std::setprecision(6) << avgLoss << " - Accuracy: " 
+              << std::fixed << std::setprecision(2) << accuracy << "\n";
 }
 
 double TrainerClassification::calculateAccuracy(const std::vector<std::vector<double>>& inputs,
@@ -47,8 +57,8 @@ double TrainerClassification::calculateAccuracy(const std::vector<std::vector<do
         auto output = net.feedForward(inputs[i], activation);
         auto probabilities = utils::softmax(output);
 
-        int predicted = std::distance(probabilities.begin(), std::max_element(probabilities.begin(), probabilities.end()));
-        int actual = std::distance(targets[i].begin(), std::max_element(targets[i].begin(), targets[i].end()));
+        int predicted = static_cast<int>(std::distance(probabilities.begin(), std::max_element(probabilities.begin(), probabilities.end())));
+        int actual = static_cast<int>(std::distance(targets[i].begin(), std::max_element(targets[i].begin(), targets[i].end())));
 
         if (predicted == actual)
             ++correct;
