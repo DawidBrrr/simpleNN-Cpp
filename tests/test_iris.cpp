@@ -55,7 +55,7 @@ TEST(IrisNetworkTest, LearnsToClassify) {
                                   LossFunctions::crossEntropyDerivative,
                                   LossFunctions::crossEntropy);
 
-    trainer.train(iris_inputs, iris_targets, 2000, 0.1,500);
+    trainer.train(iris_inputs, iris_targets, 200, 0.1, 10, 1);
 
     double accuracy = trainer.calculateAccuracy(iris_inputs, iris_targets);
     std::cout << "Iris classification accuracy: " << accuracy << "\n";

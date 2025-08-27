@@ -17,7 +17,8 @@ public:
                        const std::vector<std::vector<double>>& targets,
                        size_t epochs,
                        double learningRate,
-                       size_t printEvery) = 0;
+                       size_t printEvery,
+                       size_t batchSize) = 0;
 
     virtual void evaluate(const std::vector<std::vector<double>>& inputs,
                           const std::vector<std::vector<double>>& targets,

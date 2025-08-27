@@ -29,7 +29,7 @@ int main(){
                                       LossFunctions::crossEntropyDerivative,
                                       LossFunctions::crossEntropy);
         
-        trainer.train(train.inputs,train.targets,10,0.1,1);
+        trainer.train(train.inputs, train.targets, 10, 0.05, 1, 64);
         
         double accuracy = trainer.calculateAccuracy(test.inputs, test.targets);
 

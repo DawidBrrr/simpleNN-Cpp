@@ -3,6 +3,8 @@
 #include <cmath>
 #include <functional>
 #include <stdexcept>
+#include <algorithm>
+#include <limits>
 
 namespace ActivationFunctions{
     double sigmoid(double x);

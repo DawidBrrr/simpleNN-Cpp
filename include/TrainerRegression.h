@@ -27,7 +27,8 @@ public:
                const std::vector<std::vector<double>>& targets,
                size_t epochs,
                double learningRate,
-               size_t printEvery = 1000) override;
+               size_t printEvery = 1000,
+               size_t batchSize = 1) override;
 
     void evaluate(const std::vector<std::vector<double>>& inputs,
                   const std::vector<std::vector<double>>& targets,

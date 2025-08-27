@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include <utility>
 
 class Neuron {
 private:

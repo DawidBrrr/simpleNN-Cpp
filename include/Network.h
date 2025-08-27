@@ -21,6 +21,13 @@ public:
                    double learningRate,
                    const std::function<double(double,double)> &lossDerivative);
 
+    void backpropagateBatch(const std::vector<std::vector<double>>& inputs,
+                            const std::vector<std::vector<double>>& targets,
+                            const std::function<double(double)>& activationFunction,
+                            const std::function<double(double)>& activationDerivative,
+                            double learningRate,
+                            const std::function<double(double,double)> &lossDerivative);
+
     void initializeWeights();
     void HeInitializeWeights();
     void initializeBiases();

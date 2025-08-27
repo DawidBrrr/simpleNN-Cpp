@@ -51,4 +51,4 @@ target_link_libraries(tests
 )
 
 include(GoogleTest)
-gtest_discover_tests(tests)
+add_test(NAME tests COMMAND tests.exe)
